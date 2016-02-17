@@ -1,7 +1,7 @@
 function res = g( z )
 
-delta1 = cos(1.047);
-delta2 = cos(1.57);
+global delta1 delta2;
+
 
 if z <= delta2
     res = 0;
