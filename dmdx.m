@@ -1,4 +1,4 @@
-function res = dmdx( zx, y, d)
+function res = dmdx( x, y, d)
 
 global Ca la Cr lr;
 

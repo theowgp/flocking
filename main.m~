@@ -34,7 +34,7 @@ v0 =  ones(N+1, d);
 
 %SOLVE ADJOINT EQUATION
 %initial condition for the adjoint equation
-pn = [-(solx(n, :, :) - xxdes(T, N, d)) ;     -(solv(n, :, :) - xvdes(T, N, d))];
+pn = [-(solx(n, :, :) - xxdes(T, N, d))      -(solv(n, :, :) - xvdes(T, N, d))];
 %solving the equation
 solp = AdjointEquation(pn, solx, solv,  N, d, n,  h);
 
