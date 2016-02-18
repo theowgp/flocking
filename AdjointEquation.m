@@ -1,12 +1,10 @@
-function [solp] = AdjointEquation(p1, x, v,  N, d, n,  h)
+function [solp] = AdjointEquation(pn, solx, solv,  N, d, n,  h)
 
-solp(n, :, :) = p1;
+solp(:, :, n) = pn;
 
 
-for k=n:2
-    p0 = p1 + h*fp(p1, x, v, N, d);
-    p1 = p0;
-    solp(k-1, :, :) = p0;
+for k=n:-1:2
+    solp(:, :, k-1) = solp(:, :, k) + h*fp(solp(:, :, k), solx(:,:,k), solv(:,:,k), N, d);
 end
 
 

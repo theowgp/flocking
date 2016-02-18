@@ -3,8 +3,11 @@ res = zeros(1, d);
 
 res(1) = t;
 res(2) = t;
+%res(1) = 1;
+%res(2) = 1;
 %res(1) = 0;
 %res(2) = 0;
+
 
 end
 
