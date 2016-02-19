@@ -8,7 +8,7 @@ N=5;
 %dimension
 d=2;
 %final time
-T=20;
+T=5;
 %mesh size
 h=0.1;
 %mesh
@@ -18,6 +18,12 @@ n=length(t);
 %solution
 %solx=zeros(n, N+1, d);
 %solv=zeros(n, N+1, d);
+%control with zero initial value
+u = zeros(2*(N+1), d, n);
+%initialize the control on the leader
+for k=1:n
+    u(N+2, :, k) = uleader(t(k), d);
+end
 
 %initial position
 x0 = zeros(N+1, d);
@@ -31,15 +37,15 @@ v0 =  ones(N+1, d);
 
 
 %SOLVE  FORWARD EQUATION
-[solx, solv] = ForwardEquation(x0, v0, N, d, n,  h, t);
+[solx, solv] = ForwardEquation(x0, v0, u, N, d, n,  h, t);
 
 %SOLVE ADJOINT EQUATION
 %initial condition for the adjoint equation
 pn = [-(solx(:, :, n) - xxdes(T, N, d));  -(solv(:, :, n) - xvdes(T, N, d))];
 %solving the equation
-solp = AdjointEquation(pn, solx, solv,  N, d, n,  h);
+solp = AdjointEquation(pn, solx, solv, N, d, n,  h);
 
-
+%solp
 
 
 %PLOT TRAJECTORIES
@@ -52,10 +58,19 @@ for i=1:N+1
     hold all
 end
 
-solp
+
 %PLOT SOLUTION OF THE ADJOINT EQUATION
-%figure
-%for i=1:N+1
-    %plot(solp(:,i,1), solp(:,i,2));
-    %hold all
-%end
+%plot the first dimension of p against time
+figure
+for i=1:2*(N+1)
+    plot(t, reshape(solp(i,1,:), n, 1));
+    %plot(solx(i,1,:), solx(i,2,:));
+    hold all
+end
+%plot the second dimension of p against time
+figure
+for i=1:2*(N+1)
+    plot(t, reshape(solp(i,2,:), n, 1));
+    %plot(solx(i,1,:), solx(i,2,:));
+    hold all
+end

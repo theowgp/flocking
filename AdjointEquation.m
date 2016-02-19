@@ -1,6 +1,7 @@
-function [solp] = AdjointEquation(pn, solx, solv,  N, d, n,  h)
+function [solp] = AdjointEquation(pn, solx, solv, N, d, n,  h)
 
 solp(:, :, n) = pn;
+solp(:, :, n) = ones(2*(N+1), d);
 
 
 for k=n:-1:2

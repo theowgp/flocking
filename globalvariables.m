@@ -1,5 +1,5 @@
 %set global variables
-global mu;
+global mu nu;
 global Ca la Cr lr;
 global Ca0 la0 Cr0 lr0;
 global gamma1 
@@ -29,3 +29,4 @@ Cr0=50;
 lr0=2;
 
 mu=1;
+nu=1;
