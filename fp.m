@@ -1,8 +1,8 @@
-function res = fp(p, x, v, N, d)
+function res = fp(k, p, solx, solv, N, d)
 
-res = - (-Gl1(x, N, d) +  mult(Gf(x, v, N, d), p));
-%res = - (                 mult(Gf(x, v, N, d), p));
-%res = - (-Gl1(x, N, d)                           );
+res = - (-Gl1(solx(:, :, k), N, d) +  mult(Gf(solx(:, :, k), solv(:, :, k), N, d), p));
+%res = - (                 mult(Gf(solx(:, :, k), solv(:, :, k), N, d), p));
+%res = - (-Gl1(solx(:, :, k), N, d)                           );
 %res = p;
 end
 

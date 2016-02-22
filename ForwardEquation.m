@@ -5,8 +5,8 @@ solv(:, :, 1) = v0;
 
 
 for k=1:n-1
-    solx(:, :, k+1) = solx(:, :, k) + h*fx(k, solv(:, :, k), u, N);
-    solv(:, :, k+1) = solv(:, :, k) + h*fv(k, solx(:, :, k), solv(:, :, k), u, N, d);
+    solx(:, :, k+1) = solx(:, :, k) + h*fx(k, solv, u, N);
+    solv(:, :, k+1) = solv(:, :, k) + h*fv(k, solv(:, :, k), solx, u, N, d);
 end
 
 
