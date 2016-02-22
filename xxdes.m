@@ -1,6 +1,6 @@
-function res = xxdes(t, N, d)
+function res = xxdes(t, d)
 
-res = t*ones(N+1, d);
+res = t*ones(1, d);
 
 end
 
