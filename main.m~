@@ -37,7 +37,9 @@ v0 =  ones(N+1, d);
 
 
 %SOLVE  FORWARD EQUATION
-[solx, solv] = ForwardEquation(x0, v0, u, N, d, n,  h, t);
+[solx, solv] = ForwardEquation(x0, v0, u, N, d, n,  h);
+%SOLVE  EQUATION FOR INCIDENT VARIABLES
+xhat = IncidentEquation(solx, u)
 
 %SOLVE ADJOINT EQUATION
 %initial condition for the adjoint equation

@@ -1,4 +1,4 @@
-function [solx, solv] = ForwardEquation(x0, v0, u, N, d, n,  h, t)
+function [solx, solv] = ForwardEquation(x0, v0, u, N, d, n,  h)
 
 solx(:, :, 1) = x0;
 solv(:, :, 1) = v0;

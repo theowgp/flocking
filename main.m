@@ -1,4 +1,4 @@
-clear all
+clear variables
 %GLOBAL VARIABLES:
 globalvariables
 
@@ -8,7 +8,7 @@ N=5;
 %dimension
 d=2;
 %final time
-T=5;
+T=20;
 %mesh size
 h=0.1;
 %mesh
@@ -22,9 +22,10 @@ n=length(t);
 u = zeros(2*(N+1), d, n);
 %initialize the control on the leader
 for k=1:n
-    u(N+2, :, k) = uleader(t(k), d);
+    u(N+2, :, k) = uleader0(t(k), d);
 end
 
+%SOLVE  FORWARD EQUATION
 %initial position
 x0 = zeros(N+1, d);
 for i = 1:N+1
@@ -33,11 +34,15 @@ for i = 1:N+1
 end
 %initial velocity
 v0 =  ones(N+1, d);
+[solx, solv] = ForwardEquation(x0, v0, u, N, d, n,  h);
 
+%SOLVE  EQUATION FOR THE INCIDENT VARIABLE
+xhat0 = 0;
+solxhat = IncidentEquation(xhat0, solx, u, N, n, h);
+%plot the solution of the incident equation
+ plot(t, solxhat);
+% figure
 
-
-%SOLVE  FORWARD EQUATION
-[solx, solv] = ForwardEquation(x0, v0, u, N, d, n,  h, t);
 
 %SOLVE ADJOINT EQUATION
 %initial condition for the adjoint equation
@@ -51,29 +56,30 @@ solp = AdjointEquation(pn, solx, solv, N, d, n,  h);
 %solp
 
 
-%PLOT TRAJECTORIES
-%plot leader's trajectory
-%plot(solx(:,2,1), solx(:,2,2));
-%plot leader's and other's tajectory
-for i=1:N+1
-    plot(reshape(solx(i,1,:), n, 1), reshape(solx(i,2,:), n, 1));
-    %plot(solx(i,1,:), solx(i,2,:));
-    hold all
-end
 
+% %PLOT TRAJECTORIES
+% %plot leader's trajectory
+% %plot(solx(:,2,1), solx(:,2,2));
+% %plot leader's and other's tajectory
+% for i=1:N+1
+%     plot(reshape(solx(i,1,:), n, 1), reshape(solx(i,2,:), n, 1));
+%     %plot(solx(i,1,:), solx(i,2,:));
+%     hold all
+% end
+% 
 
-%PLOT SOLUTION OF THE ADJOINT EQUATION
-%plot the first dimension of p against time
-figure
-for i=1:2*(N+1)
-    plot(t, reshape(solp(i,1,:), n, 1));
-    %plot(solx(i,1,:), solx(i,2,:));
-    hold all
-end
-%plot the second dimension of p against time
-figure
-for i=1:2*(N+1)
-    plot(t, reshape(solp(i,2,:), n, 1));
-    %plot(solx(i,1,:), solx(i,2,:));
-    hold all
-end
+% %PLOT SOLUTION OF THE ADJOINT EQUATION
+% %plot the first dimension of p against time
+% figure
+% for i=1:2*(N+1)
+%     plot(t, reshape(solp(i,1,:), n, 1));
+%     %plot(solx(i,1,:), solx(i,2,:));
+%     hold all
+% end
+% %plot the second dimension of p against time
+% figure
+% for i=1:2*(N+1)
+%     plot(t, reshape(solp(i,2,:), n, 1));
+%     %plot(solx(i,1,:), solx(i,2,:));
+%     hold all
+% end
