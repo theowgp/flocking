@@ -15,7 +15,8 @@ for i=2:N+1
     Gxl1(i,:) = -2*mu*norm(x(1,:)-x(i,:))^2*(x(1,:)-x(i,:));
 end
 
-res = [Gxl1; Gvl1];
+%res = [Gxl1; Gvl1];
+res = [reMtoV(Gxl1); reMtoV(Gvl1)];
 
 end
 

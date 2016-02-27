@@ -1,4 +1,6 @@
-function res = myreshapeback(p, n, d)
+function res = reMtoV(p)
+
+[n, d] = size(p);
 
 res = zeros(n*d, 1);
 for i=1:n

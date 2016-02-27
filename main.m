@@ -1,20 +1,26 @@
-clear variables
+%clear variables
 %GLOBAL VARIABLES:
 globalvariables
 
 %PARAMETERS:
 %number of agents
-N=5;
+N=10;
 %dimension
 d=2;
 %final time
 T=20;
+%mesh length
+n=403;
 %mesh size
-h=0.1;
+h=T/(n-1);
 %mesh
 t=0:h:T;
-%mesh length
-n=length(t);
+%adjoint mesh length
+nn = floor(n/2)+1;
+%adjoint mesh size
+hh=2*h;
+%adjoint mesh
+tt=t(1:2:n);
 %solution
 %solx=zeros(n, N+1, d);
 %solv=zeros(n, N+1, d);
@@ -25,6 +31,7 @@ for k=1:n
     u(N+2, :, k) = uleader0(t(k), d);
 end
 
+%SOLVE  FORWARD EQUATION
 %initial position
 x0 = zeros(N+1, d);
 for i = 1:N+1
@@ -33,11 +40,11 @@ for i = 1:N+1
 end
 %initial velocity
 v0 =  ones(N+1, d);
-
-
-
-%SOLVE  FORWARD EQUATION
+%solving the equation
 [solx, solv] = ForwardEquation(x0, v0, u, N, d, n,  h);
+
+
+
 
 %SOLVE ADJOINT EQUATION
 %initial condition for the adjoint equation
@@ -66,14 +73,16 @@ end
 %plot the first dimension of p against time
 figure
 for i=1:2*(N+1)
-    plot(t, reshape(solp(i,1,:), n, 1));
+    %plot(t, reshape(solp(i,1,:), n, 1));
+    plot(tt, reshape(solp(i,1,:), nn, 1));
     %plot(solx(i,1,:), solx(i,2,:));
     hold all
 end
 %plot the second dimension of p against time
 figure
 for i=1:2*(N+1)
-    plot(t, reshape(solp(i,2,:), n, 1));
+    %plot(t, reshape(solp(i,2,:), n, 1));
+    plot(tt, reshape(solp(i,2,:), nn, 1));
     %plot(solx(i,1,:), solx(i,2,:));
     hold all
 end

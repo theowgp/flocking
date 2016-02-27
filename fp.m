@@ -1,5 +1,9 @@
 function res = fp(k, p, solx, solv, N, d)
 
-res = - (-Gl1(solx(:, :, k), N, d) +    myreshape(Gf(solx(:, :, k),solv(:, :, k), N, d)'*myreshapeback(p, 2*(N+1), d),    2*(N+1), d)             );
+term1 = Gl1(solx(:, :, k), N, d);
+
+term2 = Gf(solx(:, :, k), solv(:, :, k), N, d)'*reMtoV(p);
+
+res = reVtoM( ( term1  - term2 ), d);
 
 end

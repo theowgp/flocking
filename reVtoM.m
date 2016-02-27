@@ -1,4 +1,6 @@
-function res = myreshape(p, n, d)
+function res = reVtoM(p, d)
+
+n = length(p)/d;
 
 res = zeros(n, d);
 for i=1:n
