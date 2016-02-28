@@ -27,8 +27,8 @@ tt=t(1:2:n);
 %control with zero initial value
 u = zeros(d, nn);
 %initialize the control on the leader
-for k=1:n
-    u(:, k) = uleader0(t(k), d);
+for kk=1:nn
+    u(N+2, :, kk) = uleader0(t(kk), d);
 end
 
 %SOLVE  FORWARD EQUATION
