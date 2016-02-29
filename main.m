@@ -8,7 +8,7 @@ N=5;
 %dimension
 d=2;
 %final time
-T=20;
+T=5;
 %mesh length
 n=403;
 %mesh size
@@ -34,12 +34,17 @@ end
 %INITIAL CONDITION FOR THE FORWARD EQUATION
 %initial position
 x0 = zeros(N+1, d);
-for i = 1:N+1
+x0(1,1) = 0;
+for i = 2:N+1
     %x0(i,2)=0;
-    x0(i,1)=20*N*i/(N+1);
+    x0(i,1) = x0(i-1,1) + 1;
 end
 %initial velocity
-v0 =  ones(N+1, d);
+v0 =  zeros(N+1, d);
+for i = 1:N+1
+    %x0(i,2)=0;
+    v0(i,2) = 0.5;
+end
 
 
 %[solx, u] = SteepestDescent(u, eps, x0, v0, N, d, n, h, T);
@@ -57,8 +62,7 @@ v0 =  ones(N+1, d);
 %(only the first element is nonzero)
 pn = zeros(2*(N+1), d);
 pn(1,:) = -(solx(1, :, n) - xxdes(T, d));
-%test
-%test
+test
 %solving the equation
 solp = AdjointEquation(pn, solx, solv, N, d, n,  h);
 
