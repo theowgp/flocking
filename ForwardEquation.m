@@ -5,7 +5,7 @@ solv(:, :, 1) = v0;
 
 
 for k=1:n-1
-    solx(:, :, k+1) = solx(:, :, k) + h*fx(k, solv, u, N);
+    solx(:, :, k+1) = solx(:, :, k) + h*fx(k, solv);
     solv(:, :, k+1) = solv(:, :, k) + h*fv(k, solv(:, :, k), solx, u, N, d);
 end
 
