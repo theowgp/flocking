@@ -16,17 +16,17 @@ beta = 0.05;
 gamma=1;
 sigma=0.5;
 
-gamma1=10;
+gamma1=1;
 
 Ca=20;
 la=100;
 Cr=50;
 lr=2;
 
-Ca0=10;
-la0=50;
-Cr0=25;
-lr0=1;
+Ca0=20;
+la0=100;
+Cr0=50;
+lr0=2;
 
 mu=1;
 

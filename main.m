@@ -10,7 +10,7 @@ d=2;
 %final time
 T=20;
 %mesh length
-n=201;
+n=403;
 %mesh size
 h=T/(n-1);
 %mesh
@@ -42,7 +42,7 @@ end
 v0 =  ones(N+1, d);
 
 
-% [solx, u] = SteepestDescent(u, eps, x0, v0, N, d, n, h, T);
+%[solx, u] = SteepestDescent(u, eps, x0, v0, N, d, n, h, T);
 
 %SOLVE  FORWARD EQUATION
 %solving the equation
@@ -57,6 +57,8 @@ v0 =  ones(N+1, d);
 %(only the first element is nonzero)
 pn = zeros(2*(N+1), d);
 pn(1,:) = -(solx(1, :, n) - xxdes(T, d));
+%test
+%test
 %solving the equation
 solp = AdjointEquation(pn, solx, solv, N, d, n,  h);
 
