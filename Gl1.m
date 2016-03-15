@@ -16,11 +16,11 @@ for i=2:N+1
 end
 
 %res = [Gxl1; Gvl1];
-%res = [reMtoV(Gxl1); reMtoV(Gvl1)];
+res = [reMtoV(Gxl1); reMtoV(Gvl1)];
 
 
 %% ACHTUNG
-res = zeros(2*(N+1)*d, 1);
+%res = zeros(2*(N+1)*d, 1);
 
 end
 

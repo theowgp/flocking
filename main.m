@@ -1,16 +1,16 @@
 clear variables
-%GLOBAL VARIABLES:
+%% GLOBAL VARIABLES:
 globalvariables
 
-%PARAMETERS:
+%% PARAMETERS:
 %number of agents
-N=5;
+N=0;
 %dimension
 d=2;
 %final time
-T=5;
+T=1;
 %mesh length
-n=403;
+n=101;
 %mesh size
 h=T/(n-1);
 %mesh
@@ -31,69 +31,97 @@ for k=1:n
     u(:, k) = uleader0(t(k), d);
 end
 
-%INITIAL CONDITION FOR THE FORWARD EQUATION
+%% INITIAL CONDITION FOR THE FORWARD EQUATION
+% %initial position
+% x0 = zeros(N+1, d);
+% x0(1,1) = 0;
+% for i = 2:N+1
+%     %x0(i,2)=0;
+%     x0(i,1) = x0(i-1,1) + 1;
+% end
+% %initial velocity
+% v0 =  zeros(N+1, d);
+% for i = 1:N+1
+%     %x0(i,2)=0;
+%     v0(i,2) = 0.5;
+% end
+%for one agent
 %initial position
-x0 = zeros(N+1, d);
-x0(1,1) = 0;
-for i = 2:N+1
-    %x0(i,2)=0;
-    x0(i,1) = x0(i-1,1) + 1;
-end
+x0 = ones(N+1, d);
+x0(:,2) = 2*ones(N+1);
 %initial velocity
-v0 =  zeros(N+1, d);
-for i = 1:N+1
-    %x0(i,2)=0;
-    v0(i,2) = 0.5;
-end
-
-
-%[solx, u] = SteepestDescent(u, eps, x0, v0, N, d, n, h, T);
-
-%SOLVE  FORWARD EQUATION
-%solving the equation
-[solx, solv] = ForwardEquation(x0, v0, u, N, d, n,  h);
+v0 =  0.2*ones(N+1, d);
 
 
 
 
-%SOLVE ADJOINT EQUATION
-%initial condition for the adjoint equation
-%pn = [-(solx(:, :, n) - xxdes(T, N, d));  -(solv(:, :, n) - xvdes(T, N, d))];% this is wrong!!!
-%(only the first element is nonzero)
-pn = zeros(2*(N+1), d);
-pn(1,:) = -(solx(1, :, n) - xxdes(T, d));
-test
-%solving the equation
-solp = AdjointEquation(pn, solx, solv, N, d, n,  h);
+%% STEEPEST DESCENT
+eps = 0.0001;
+limit = 1000;
+sigma = 0.0001;
+[solx, u , K, G] = SteepestDescent(u, eps, x0, v0, N, d, n, h, T, limit, sigma);
+
+ 
+% %% SOLVE  FORWARD EQUATION
+% %solving the equation
+% [solx, solv] = ForwardEquation(x0, v0, u, N, d, n,  h);
+% 
+% 
+% 
+% 
+% %% SOLVE ADJOINT EQUATION
+% %initial condition for the adjoint equation
+% %pn = [-(solx(:, :, n) - xxdes(T, N, d));  -(solv(:, :, n) - xvdes(T, N, d))];% this is wrong!!!
+% %(only the first element is nonzero)
+% pn = zeros(2*(N+1), d);
+% pn(1,:) = -(solx(1, :, n) - xxdes(T, d));
+% test
+% %solving the equation
+% solp = AdjointEquation(pn, solx, solv, N, d, n,  h);
 
 
 
 
-%PLOT TRAJECTORIES
+%% PLOT GRADIENT DESCENT
+figure
+plot(K, G);
+
+
+%% PLOT TRAJECTORIES
 %plot leader's trajectory
 %plot(solx(:,2,1), solx(:,2,2));
 %plot leader's and other's tajectory
+figure
 for i=1:N+1
     plot(reshape(solx(i,1,:), n, 1), reshape(solx(i,2,:), n, 1));
     %plot(solx(i,1,:), solx(i,2,:));
     hold all
 end
 
-
-%PLOT SOLUTION OF THE ADJOINT EQUATION
+%% PLOT THE CONTROL
 %plot the first dimension of p against time
 figure
-for i=1:2*(N+1)
-    plot(t, reshape(solp(i,1,:), n, 1));
-    %plot(tt, reshape(solp(i,1,:), nn, 1));
-    %plot(solx(i,1,:), solx(i,2,:));
-    hold all
-end
+plot(t, reshape(u(1,:), n, 1));
 %plot the second dimension of p against time
 figure
-for i=1:2*(N+1)
-    plot(t, reshape(solp(i,2,:), n, 1));
-    %plot(tt, reshape(solp(i,2,:), nn, 1));
-    %plot(solx(i,1,:), solx(i,2,:));
-    hold all
-end
+plot(t, reshape(u(2,:), n, 1));
+
+
+
+% %% PLOT SOLUTION OF THE ADJOINT EQUATION
+% %plot the first dimension of p against time
+% figure
+% for i=1:2*(N+1)
+%     plot(t, reshape(solp(i,1,:), n, 1));
+%     %plot(tt, reshape(solp(i,1,:), nn, 1));
+%     %plot(solx(i,1,:), solx(i,2,:));
+%     hold all
+% end
+% %plot the second dimension of p against time
+% figure
+% for i=1:2*(N+1)
+%     plot(t, reshape(solp(i,2,:), n, 1));
+%     %plot(tt, reshape(solp(i,2,:), nn, 1));
+%     %plot(solx(i,1,:), solx(i,2,:));
+%     hold all
+% end

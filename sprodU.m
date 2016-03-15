@@ -15,6 +15,7 @@ for k = 1:n
 end
 
 res = (T/(n-1))*temp;
+%res = (T/n)*temp;
 
 
 end
