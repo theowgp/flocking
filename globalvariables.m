@@ -10,8 +10,10 @@ global delta1 delta2;
 delta1 = cos(1.047);
 delta2 = cos(1.57);
 
-alpha = 0.07;
-beta = 0.05;
+%alpha = 0.07;
+%beta = 0.05;
+alpha = 0;
+beta = 0;
 
 gamma=1;
 sigma=0.5;

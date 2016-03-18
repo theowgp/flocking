@@ -1,34 +1,34 @@
-function [solp] = AdjointEquation(pn, solx, solv, N, d, n,  h)
+function [solp] = AdjointEquation(pn, solv, N, d, n,  h)
 
-% solp(:, :, n) = pn;
-% 
-% %solving adjoint equation on the fine grid
-% %euler method 
-% for k=n:-1:2
-%     solp(:, :, k-1) = solp(:, :, k) + h*fp(k, solp(:, :, k), solx, solv, N, d);
-% end
+solp(:, :, n) = pn;
 
-
-
-
-
-%solving adjoint equation on the fine grid 
-%backward euler method 
-p(:, n) = reMtoV(pn);
-
-m = 2*(N+1)*d;
-
-
+%solving adjoint equation on the fine grid
+%euler method 
 for k=n:-1:2
-    p(:, k-1) = (eye(m, m) + h*Gf(solx(:, :, k-1), solv(:, :, k-1), N, d)')^(-1) * (p(:, k) + h*Gl1(solx(:, :, k-1), N, d)) ;
+    solp(:, :, k-1) = solp(:, :, k) + h*fp(k, solp(:, :, k), solv, N, d);
 end
 
-solp = zeros(2*(N+1), d, n);
 
 
-for k=n:-1:1
-    solp(:,:,k) = reVtoM(p(:,k), d);
-end
+
+
+% %solving adjoint equation on the fine grid 
+% %backward euler method 
+% p(:, n) = reMtoV(pn);
+% 
+% m = 2*(N+1)*d;
+% 
+% 
+% for k=n:-1:2
+%     p(:, k-1) = (eye(m, m) + h*Gf(solv(:, :, k-1), N, d)')^(-1) * p(:, k);
+% end
+% 
+% solp = zeros(2*(N+1), d, n);
+% 
+% 
+% for k=n:-1:1
+%     solp(:,:,k) = reVtoM(p(:,k), d);
+% end
 
 
 

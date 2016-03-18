@@ -1,9 +1,7 @@
-function res = fp(k, p, solx, solv, N, d)
+function res = fp(k, p, solv, N, d)
 
-term1 = Gl1(solx(:, :, k), N, d);
+term = Gf(solv(:, :, k), N, d)'*reMtoV(p);
 
-term2 = Gf(solx(:, :, k), solv(:, :, k), N, d)'*reMtoV(p);
-
-res = reVtoM( ( term1  - term2 ), d);
+res = reVtoM( ( - term ), d);
 
 end

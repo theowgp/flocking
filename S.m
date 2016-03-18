@@ -1,4 +1,4 @@
-function res = S( v, N, d ) %S0: Rd(N+1)  -> Rd(N+1) 
+function res = S(v, N, d) 
 
 global alpha beta;
 

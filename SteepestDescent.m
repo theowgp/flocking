@@ -38,6 +38,18 @@ while sqrt(sprodU(dk, dk, T)) > eps && k1 < limit
     dk = -GJr(uk, solp, N);
     k1 = k1 + 1;
     
+    
+    %% PLOT TRAJECTORIES
+    %plot leader's trajectory
+    %plot(solx(:,2,1), solx(:,2,2));
+    %plot leader's and other's tajectory
+    for i=1:N+1
+        plot(reshape(solx(i,1,:), n, 1), reshape(solx(i,2,:), n, 1));
+        %plot(solx(i,1,:), solx(i,2,:));
+        hold all
+    end
+
+    
 end
 
 state = solx;

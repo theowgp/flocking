@@ -13,6 +13,12 @@ for i=1:length(solp(N+2, :, 1))
 end
 res = nu*u - temp;
 
+% global nu;
+% res= zeros(size(u));
+% for k=1:length(u(1,:))
+%     res(1, k) = nu*u(1, k) - solp(N+2, 1, k);
+%     res(2, k) = nu*u(2, k) - solp(N+2, 2, k);
+% end
 
 end
 

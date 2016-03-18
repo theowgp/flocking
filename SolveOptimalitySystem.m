@@ -15,7 +15,7 @@ function [solx, solp] = SolveOptimalitySystem(x0, v0, u, N, d, n,  h, T)
 pn = zeros(2*(N+1), d);
 pn(1,:) = -(solx(1, :, n) - xxdes(T, d));
 %solving the equation
-solp = AdjointEquation(pn, solx, solv, N, d, n,  h);
+solp = AdjointEquation(pn, solv, N, d, n,  h);
 
 
 end
